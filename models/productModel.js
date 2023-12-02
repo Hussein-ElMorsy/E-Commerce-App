@@ -13,7 +13,7 @@ const productSchema = new mongoose.Schema(
         'A product name must have less or equal than 15 characters',
       ],
       minlength: [
-        10,
+        5,
         'A product name must have more or equal than 5 characters',
       ],
     },
@@ -63,7 +63,7 @@ const productSchema = new mongoose.Schema(
   },
 );
 
-tourSchema.pre(/^find/, function (next) {
+productSchema.pre(/^find/, function (next) {
   this.populate({
     path: 'shipper',
     select: '-__v -passwordChangedAt',
@@ -73,7 +73,7 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 // Virtual Populate
-tourSchema.virtual('reviews', {
+productSchema.virtual('reviews', {
   ref: 'Review',
   foreignField: 'product',
   localField: '_id',
